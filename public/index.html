@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body ng-app="newsFeed">
+    
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <form ng-controller="PostController as postCtrl" ng-submit="postCtrl.addPost();">
+            <div class="form-group">
+              <input ng-model="postCtrl.post.username" class="form-control" type="text" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <textarea ng-model="postCtrl.post.message" class="form-control twitBox"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default sendTwit">Send</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="row" ng-controller="newsFeedController as newsFeedCtrl">
+        <div class="col-md-6 col-md-offset-3 postContainer" ng-repeat="post in newsFeedCtrl.posts">
+          <p>{{post.username + " says:"}}</p>
+          <p>{{post.message}}<span class="pull-right">{{post.createdAt | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</span></p>
+        </div>
+      </div>
+      
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/app/controllers/newsFeedController.js"></script>
+  </body>
+
+</html>

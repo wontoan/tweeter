@@ -1,0 +1,72 @@
+/********* Fonts **********/
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto'), local('Roboto-Regular'), url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+/****** Main Styling ******/
+.mainWelcome {
+  text-align: center;
+}
+
+.logo {
+  width: 40%;
+  margin: 20px auto;
+}
+
+.loginButton {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.registerButton {
+  width: 200px;
+}
+
+/****** Header Styling ******/
+
+
+/****** Login Styling ******/
+.welcome {
+  text-align: center;
+}
+
+.login {
+  margin-right: 20px;
+}
+
+/***** News Feed Styling *****/
+.username, 
+.twitBox,
+.postContainer {
+  margin-top: 20px;
+}
+
+.twitBox {
+  width: 300px;
+  height: 100px;
+}
+
+.postContainer {
+  background-color: #90CAF9;
+}
+
+/****** Logo Div Styling ******/
+
+
+/****** Click Styling ******/
+
+
+/****** Profile Styling ******/
+
+/****** Twit Styling ******/
