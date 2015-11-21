@@ -9,11 +9,11 @@
     this.error = "";
     
     this.login = function() {
-      this.error = "Agasgsag";
+      this.error = "Login request for " + this.user.username;
     };
     
     this.register = function(){
-      this.error = "Agasgsag";
+      this.error = "Registration request for " + this.user.username;
     };
   });
   

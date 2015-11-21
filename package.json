@@ -1,0 +1,24 @@
+{
+  "name": "@wontoan/tweeter",
+  "version": "1.0.0",
+  "description": "dependencies for twitter clone",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wontoan/tweeter.git"
+  },
+  "author": "wontoan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wontoan/tweeter/issues"
+  },
+  "homepage": "https://github.com/wontoan/tweeter#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3"
+  },
+  "devDependencies": {}
+}
