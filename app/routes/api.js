@@ -4,11 +4,11 @@ var express = require("express");
 var router = express.Router();
 
 router.route('/posts')
-//returns all posts
+      //returns all posts
       .get(function(req, res){
         res.send('TO DO: return all posts');
       })
-
+      //Creates new post
       .post(function(req, res){
         res.send('TO DO: create a new post');
       });
@@ -22,5 +22,5 @@ router.route('/posts/:id')
       res.send("TO DO: Add/Modify post with ID " req.params.id);
     });
 
-//Export our api router so it can be used/seen by app.js
+//Export our api router so it can be used by app.js
 module.exports = router;
