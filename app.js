@@ -1,16 +1,16 @@
 var express = require('express');
 var path = require('path');
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 
 var app = express();
 
 //JavaScript files in 'routes' dir
-var api = require('./routes/api');
-//var authenticate = require('./routes/authenticate');
+var api = require('./app/routes/api');
+var authenticate = require('./app/routes/authenticate')(passport);
 
-mongoose.connect('mongodb://localhost:27017/tweeter-test');
+//mongoose.connect('mongodb://localhost:27017/tweeter-test');
 
 //Middleware 
 app.use('/controllers', express.static(__dirname + '/app/controllers/'));
@@ -18,10 +18,10 @@ app.use('/public', express.static(__dirname + '/public'));
 app.use('/views', express.static(__dirname + '/public/views'));
 
 app.use(session({
-  secret: 'classified secret';
+  secret: 'classified secret'
 }));
 app.use('/api', api);
-//app.use('/auth', authenticate);
+app.use('/auth', authenticate);
 app.use(passport.initialize());
 app.use(passport.session);
 

@@ -25,7 +25,7 @@ module.exports = function(passport){
       function(req, username, password, done) {
         // Check if the username does not exist
         if(!users[username]) {
-          return done('Username not found', false);
+          return done('Username ' + username + ' not found', false);
         }
         //Check if the password is incorrect
         if (!isValidPassword(users[username], password)) {
@@ -37,6 +37,7 @@ module.exports = function(passport){
         return done(null, users[username]);
       }
     ));
+  
   //User signup strategy
     passport.use('signup', new LocalStrategy({
       passReqToCallback : true // allows us to pass back the entire request to the callback
@@ -49,8 +50,9 @@ module.exports = function(passport){
       //Otherwise add user to db
         users[username] = {
           username: username,
-          password: createHash(password);
+          password: createHash(password)
         };
+    
       // Passport-required 'verify callback'
         return done(null, users[username]);
       })
