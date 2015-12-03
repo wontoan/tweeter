@@ -1,0 +1,20 @@
+<!--Post a new message/twit-->
+<form ng-submit="register()">
+  <div class="form-group">
+    <h3>Register</h3>
+    <p>{{error}}</p>
+    <input ng-model="user.username" class="form-control" type="text" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <input ng-model="user.password" class="form-control" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-default login">Register</button>
+</form>
+
+<!-- News Feed -->
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 postContainer" ng-repeat="post in posts">
+    <p>{{post.username + " says:"}}</p>
+    <p>{{post.message}}<span class="pull-right">{{post.createdAt | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</span></p>
+  </div>
+</div>
