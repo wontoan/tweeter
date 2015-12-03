@@ -14,7 +14,7 @@ function isAuthenticated(req, res, next) {
     // User is authenticated.
     return next();
   } else {
-    res.redirect('/#login');
+    return res.redirect('/#login');
   }
 }
 

@@ -1,6 +1,0 @@
-<div class="row" ng-controller="NewsFeedController as newsFeedCtrl">
-  <div class="col-md-6 col-md-offset-3 postContainer" ng-repeat="post in newsFeedCtrl.posts">
-    <p>{{post.username + " says:"}}</p>
-    <p>{{post.message}}<span class="pull-right">{{post.createdAt | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</span></p>
-  </div>
-</div>

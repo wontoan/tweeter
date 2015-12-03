@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var session = require('express-session');
 var passport = require('passport');
-var mongoose = require('mongoose');
 
 //Mongoose Schemas
 require("./models/models");
@@ -13,6 +12,7 @@ var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
 
 //Connect to mongodb
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/tweeter-test');
 
 var app = express();
@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 //Middleware
-app.use(express.static(path.join(__dirname + 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/api', api);
 app.use('/auth', authenticate);

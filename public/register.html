@@ -1,4 +1,3 @@
-<!--Post a new message/twit-->
 <form ng-submit="register()">
   <div class="form-group">
     <h3>Register</h3>
@@ -10,11 +9,3 @@
   </div>
   <button type="submit" class="btn btn-default login">Register</button>
 </form>
-
-<!-- News Feed -->
-<div class="row">
-  <div class="col-md-6 col-md-offset-3 postContainer" ng-repeat="post in posts">
-    <p>{{post.username + " says:"}}</p>
-    <p>{{post.message}}<span class="pull-right">{{post.createdAt | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</span></p>
-  </div>
-</div>

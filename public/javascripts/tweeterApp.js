@@ -20,36 +20,36 @@
       });
   });
   
-  app.controller("mainController", function () {
+  app.controller("mainController", function ($scope) {
     //Array for storing all posts
-    var posts = [{
+    $scope.posts = [{
       username: "David",
       message: "Hey what's up?",
       createdAt: Date.now()
     }];
     
     //Create blank 'new post' Object to be pushed to 'posts' array
-    this.newPost = {};
+    $scope.newPost = {};
     
     //Fill out 'new post' object
-    this.addPost = function () {
-      this.newPost.createdAt = Date.now();
-      posts.push(this.post);
-      this.newPost = {};
+    $scope.addPost = function () {
+      $scope.newPost.createdAt = Date.now();
+      $scope.posts.push(this.newPost);
+      $scope.newPost = {};
     };
   });
   
-  app.controller("authController", function () {
-    this.user = {};
+  app.controller("authController", function ($scope) {
+    $scope.user = {};
     
-    this.error = "";
+    $scope.error = "";
     
-    this.login = function () {
-      this.error = "Login request for " + this.user.username;
+    $scope.login = function () {
+      $scope.error = "Login request for " + $scope.user.username;
     };
     
-    this.register = function () {
-      this.error = "Registration request for " + this.user.username;
+    $scope.register = function () {
+      $scope.error = "Registration request for " + $scope.user.username;
     };
   });
   
