@@ -1,18 +1,20 @@
 <!--Post a new message/twit-->
-<form ng-submit="addPost();">
-  <h3>What's on your mind?</h3>
+<form ng-submit="addPost();" ng-show="authenticated">
   <h4>{{current_user}} says</h4>
   <div class="form-group">
-    <textarea ng-model="newPost.text" class="form-control twitBox"></textarea>
+    <textarea max-length="200" rows="3" placeholder="What's on your mind?" ng-model="newPost.text" class="form-control twitBox" required></textarea>
   </div>
-  <button type="submit" class="btn btn-default sendTwit">Send Twit!</button>
+  <button type="submit" class="btn btn-primary sendTwit">Send Twit!</button>
 </form>
 
 <!-- News Feed -->
 <div class="row">
-  <div class="col-md-12 postContainer" ng-repeat="post in posts">
+  <div class="col-md-12">
     <h3>Chirp Feed</h3>
+  </div>  
+  <div class="col-md-12 postContainer" ng-repeat="post in posts">
     <p>{{post.created_by + " says:"}}</p>
-    <p>{{post.text}}<span class="pull-right">{{post.created_at | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</span></p>
+    <small>{{post.text}}</small>
+    <small class="pull-right">{{post.created_at | date: "MMM dd, yyyy " + "@ " + "h:mma"}}</small>
   </div>
 </div>

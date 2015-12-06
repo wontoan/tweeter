@@ -33,20 +33,18 @@
     return $resource('api/posts/:id');
   });
   
-  app.controller("mainController", function ($scope, $rootScope, postService) {
-    //Array for storing all posts  
+  app.controller("mainController", function (postService, $scope, $rootScope) {
     $scope.posts = postService.query();
-    
-    //Create blank 'new post' Object to be pushed to 'posts' array
-    $scope.newPost = {created_by: '', text: '', created_at: ''};
+    $scope.newPost = {text: '', created_by: '', created_at: ''};
     
     //Fill out 'new post' object
     $scope.addPost = function () {
       $scope.newPost.created_by = $rootScope.current_user;
       $scope.newPost.created_at = Date.now();
+      console.log($scope.newPost);
       postService.save($scope.newPost, function () {
         $scope.posts = postService.query();
-        $scope.newPost = {created_by: '', text: '', created_at: ''};
+        $scope.newPost = {text: '', created_by: '', created_at: ''};
       });
     };
   });
@@ -57,13 +55,13 @@
     
     $scope.login = function () {
       $http.post('/auth/login', $scope.user).success(function (data) {
-        //if (data.state === 'success') {
+        if (data.state === 'success') {
           $rootScope.authenticated = true;
           $rootScope.current_user = data.user.username;
           $location.path('/');
-        //} else {
-          //$scope.error = data.message;
-        //}
+        } else {
+          $scope.error = data.message;
+        }
       });
     };
     
@@ -71,6 +69,7 @@
       $http.post('/auth/signup', $scope.user).success(function (data) {
         if (data.state === 'success') {
           $rootScope.authenticated = true;
+          //console.log(data);
           $rootScope.current_user = data.user.username;
           $location.path('/');
         } else {

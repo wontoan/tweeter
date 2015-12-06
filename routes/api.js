@@ -13,7 +13,7 @@ function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     // User is authenticated.
     return next();
-  } 
+  }
   return res.redirect('/#login');
 }
 
@@ -29,6 +29,7 @@ router.route('/posts')
     post.created_by = req.body.created_by;
     post.save(function (err, post) {
       if (err) {
+        console.log('debug1');
         return res.send(500, err);
       }
       return res.json(post);
@@ -65,7 +66,6 @@ router.route('/posts/:id')
       }
       post.created_by = req.body.created_by;
       post.text = req.body.text;
-      
       post.save(function (err, post) {
         if (err) {
           res.send(err);

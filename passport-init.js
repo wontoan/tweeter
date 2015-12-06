@@ -23,7 +23,7 @@ module.exports = function (passport) {
   },
     function (req, username, password, done) {
     
-      User.findOne({'username': username}, function (err, user) {
+      User.findOne({username: username}, function (err, user) {
         if (err) {
           return done(err);
         }
@@ -47,8 +47,7 @@ module.exports = function (passport) {
     passReqToCallback: true
   },
     function (req, username, password, done) {
-
-      User.findOne({'username': username}, function (err, user) {
+      User.findOne({username: username}, function (err, user) {
         if (err) {
           return done(err);
         }
@@ -57,15 +56,14 @@ module.exports = function (passport) {
         if (user) {
           return done(null, false);
         } else {
-          
           var newUser = new User();
           newUser.username = username;
           newUser.password = createHash(password);
-
           newUser.save(function (err) {
             if (err) {
               throw err;
             }
+            console.log(newUser.username + ' registration successful!');
             return done(null, newUser);
           });
         }

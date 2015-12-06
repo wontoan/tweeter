@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var postSchema = new mongoose.Schema({
   text: String,
-  created_by: {type: Schema.ObjectId, ref: 'User'},
+  created_by: String,
   created_at: {type: Date, default: Date.now}
 });
 

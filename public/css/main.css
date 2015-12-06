@@ -47,8 +47,7 @@
 
 /***** News Feed Styling *****/
 .username, 
-.twitBox,
-.postContainer {
+.twitBox {
   margin-top: 20px;
 }
 
@@ -58,6 +57,7 @@
 }
 
 .postContainer {
+  margin-top: 20px;
   background-color: #90CAF9;
 }
 
