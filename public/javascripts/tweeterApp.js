@@ -1,6 +1,15 @@
 (function () {
   'use strict';
-  var app = angular.module("tweeterApp", ['ngRoute']);
+  var app = angular.module("tweeterApp", ['ngRoute', 'ngResource']).run(function ($rootScope, $http) {
+    $rootScope.authenticated = false;
+    $rootScope.current_user = "";
+    
+    $rootScope.signout = function () {
+      $http.get('/auth/signout');
+      $rootScope.authenticated = false;
+      $rootScope.current_user = "";
+    };
+  });
   
   app.config(function ($routeProvider) {
     $routeProvider
@@ -14,43 +23,60 @@
         controller: 'authController'
       })
     
-      .when('/register', {
-        templateUrl: 'register.html',
+      .when('/signup', {
+        templateUrl: 'signup.html',
         controller: 'authController'
       });
   });
   
-  app.controller("mainController", function ($scope) {
-    //Array for storing all posts
-    $scope.posts = [{
-      username: "David",
-      message: "Hey what's up?",
-      createdAt: Date.now()
-    }];
+  app.factory('postService', function ($resource) {
+    return $resource('api/posts/:id');
+  });
+  
+  app.controller("mainController", function ($scope, $rootScope, postService) {
+    //Array for storing all posts  
+    $scope.posts = postService.query();
     
     //Create blank 'new post' Object to be pushed to 'posts' array
-    $scope.newPost = {};
+    $scope.newPost = {created_by: '', text: '', created_at: ''};
     
     //Fill out 'new post' object
     $scope.addPost = function () {
-      $scope.newPost.createdAt = Date.now();
-      $scope.posts.push(this.newPost);
-      $scope.newPost = {};
+      $scope.newPost.created_by = $rootScope.current_user;
+      $scope.newPost.created_at = Date.now();
+      postService.save($scope.newPost, function () {
+        $scope.posts = postService.query();
+        $scope.newPost = {created_by: '', text: '', created_at: ''};
+      });
     };
   });
   
-  app.controller("authController", function ($scope) {
-    $scope.user = {};
-    
+  app.controller("authController", function ($scope, $rootScope, $http, $location) {
+    $scope.user = {username: '', password: ''};
     $scope.error = "";
     
     $scope.login = function () {
-      $scope.error = "Login request for " + $scope.user.username;
+      $http.post('/auth/login', $scope.user).success(function (data) {
+        //if (data.state === 'success') {
+          $rootScope.authenticated = true;
+          $rootScope.current_user = data.user.username;
+          $location.path('/');
+        //} else {
+          //$scope.error = data.message;
+        //}
+      });
     };
     
     $scope.register = function () {
-      $scope.error = "Registration request for " + $scope.user.username;
+      $http.post('/auth/signup', $scope.user).success(function (data) {
+        if (data.state === 'success') {
+          $rootScope.authenticated = true;
+          $rootScope.current_user = data.user.username;
+          $location.path('/');
+        } else {
+          $scope.error = data.message;
+        }
+      });
     };
   });
-  
 })();

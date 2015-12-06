@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <title>Tweeter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
   </head>
   <body ng-app="tweeterApp">
+    <nav class"navbar navbar-inverse">
+      <div class="container"> 
+        <!--Nav header-->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/">Tweeter</a>
+        </div>
+        
+        <!--Nav Links-->
+        <ul class="nav navbar-nav navbar-right">
+          <li ng-hide="authenticated"><a href="#/login">Login</a></li>
+          <li ng-hide="authenticated"><a href="#/signup">Sign Up</a></li>
+          <li ng-show="authenticated"><a href="#" ng-click="signout()">Sign Out</a></li>
+          <li ng-show="authenticated" class="navbar-text">Signed in as {{current_user}}</li>
+        </ul>
+      </div>
+    </nav>
+    <!--Main Views-->
     <div class="container">
       <div class="col-md-6 col-md-offset-3">
         <div ng-view></div>
       </div>
-    </div>  
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.2/angular-resource.min.js"></script>
     <script src="javascripts/tweeterApp.js"></script>
   </body>
 </html>

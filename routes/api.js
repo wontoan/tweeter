@@ -1,5 +1,5 @@
 //Include express
-var express = require("express");
+var express = require('express');
 //Defines as a router
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -13,14 +13,9 @@ function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     // User is authenticated.
     return next();
-  } else {
-    return res.redirect('/#login');
-  }
+  } 
+  return res.redirect('/#login');
 }
-
-router.get('/', function (req, res) {
-  res.sendFile(express.static(__dirname + '/public/index.html'));
-});
 
 router.use('/posts', isAuthenticated);
 
@@ -28,6 +23,7 @@ router.route('/posts')
   
   //Create new post
   .post(function (req, res) {
+  
     var post = new Post();
     post.text = req.body.text;
     post.created_by = req.body.created_by;
@@ -50,8 +46,18 @@ router.route('/posts')
   });
 
 router.route('/posts/:id')
+
+  //Returns specified twit/post
+  .get(function (req, res) {
+    Post.findById(req.params.id, function (err, post) {
+      if (err) {
+        res.send(err);
+      }
+      res.json(post);
+    });
+  })
   
-  //updates a particular twit/post
+  //Updates a particular twit/post
   .put(function (req, res) {
     Post.findById(req.params.id, function (err, post) {
       if (err) {
@@ -68,15 +74,7 @@ router.route('/posts/:id')
       });
     });
   })
-  //Returns specified twit/post
-  .get(function (req, res) {
-    Post.findById(req.params.id, function (err, post) {
-      if (err) {
-        res.send(err);
-      }
-      res.json(post);
-    });
-  })
+  
   //deletes the twit/post
   .delete(function (req, res) {
     Post.remove({
@@ -85,7 +83,7 @@ router.route('/posts/:id')
       if (err) {
         res.send(err);
       }
-      res.json("post was deleted");
+      res.json("This post was deleted!");
     });
   });
 

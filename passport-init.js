@@ -1,44 +1,41 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-var Post = mongoose.model('Post');
 var LocalStrategy = require('passport-local').Strategy;
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function (passport) {
 
-    // In order to support login sessions, Passport will serialize and deserialize user instances to and from the session. See passport docs for more info 
+//    In order to support login sessions, Passport will de/serialize user instances to and from the session. See passport docs for more info
   passport.serializeUser(function (user, done) {
-      //Mongodb automatically generates an id for every object
-    console.log('serializing user:', user.username);
+      //Mongodb automatically generates an _id for every object
     done(null, user._id);
   });
 
   passport.deserializeUser(function (id, done) {
     User.findById(id, function (err, user) {
-      console.log('Deserializing user:', user.username);
       done(err, user);
     });
   });
 
 //USER LOGIN STRATEGY
   passport.use('login', new LocalStrategy({
-    passReqToCallback : true
+    passReqToCallback: true // allows us to pass back the entire request to the callback
   },
     function (req, username, password, done) {
-      // Check if the username does not exist
-      User.findOne({ 'username': username}, function (err, user) {
+    
+      User.findOne({'username': username}, function (err, user) {
         if (err) {
           return done(err);
         }
 
         //If no user with this username, login fail
         if (!user) {
-          return done(null, false, {message: "User not found with username " + username});
+          return done(null, false, {message: "Incorrect username!"});
         }
 
         //If wrong password, login fail
         if (!isValidPassword(user, password)) {
-          return done(null, false, {message: 'Incorrect username/password combination'});
+          return done(null, false, {message: "Incorrect password!"});
         }
 
         return done(null, user);
@@ -47,7 +44,7 @@ module.exports = function (passport) {
   
 //USER SIGNUP STRATEGY
   passport.use('signup', new LocalStrategy({
-    passReqToCallback : true // allows us to pass back the entire request to the callback
+    passReqToCallback: true
   },
     function (req, username, password, done) {
 
@@ -58,25 +55,24 @@ module.exports = function (passport) {
 
         //If user already signed up
         if (user) {
-          return done(null, false, {message: 'That username has already been taken'});
+          return done(null, false);
         } else {
+          
           var newUser = new User();
-
           newUser.username = username;
           newUser.password = createHash(password);
 
-          newUser.save(function (err, user) {
+          newUser.save(function (err) {
             if (err) {
               throw err;
             }
-            console.log('Successfully signed up user ' + user.username);
-            return done(null, user);
+            return done(null, newUser);
           });
         }
       });
     })
-    );
-    
+  );
+  
   //Check for correct password by comparing hash
   var isValidPassword = function (user, password) {
     return bCrypt.compareSync(password, user.password);
